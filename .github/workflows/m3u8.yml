@@ -1,0 +1,85 @@
+name: fetch m3u8
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  m3u8-fetcher:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check time
+        id: check_time
+        run: |
+          hour=$(TZ=America/New_York date +%-H)
+
+          (( hour >= 8 && hour <= 23 )) && echo "run=true" >> $GITHUB_OUTPUT || echo "run=false" >> $GITHUB_OUTPUT
+
+      - name: Checkout
+        if: steps.check_time.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Cache venv
+        if: steps.check_time.outputs.run == 'true'
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: shared-venv-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+          restore-keys: |
+            shared-venv-${{ runner.os }}-
+
+      - name: Cache cert
+        uses: actions/cache@v3
+        with:
+          path: M3U8/scrape/utils/cached-ca.pem
+          key: cert-cache-${{ runner.os }}-${{ hashFiles('M3U8/scrape/utils/cached-ca.pem') }}
+          restore-keys: |
+            cert-cache-${{ runner.os }}-
+
+      - name: Install uv
+        if: steps.check_time.outputs.run == 'true'
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+          enable-cache: true
+          ignore-nothing-to-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Setup Python
+        if: steps.check_time.outputs.run == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Cache Playwright browsers
+        id: cache-pw
+        if: steps.check_time.outputs.run == 'true'
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright
+          restore-keys: |
+            ${{ runner.os }}-playwright
+
+      - name: Install Playwright browsers
+        if: steps.check_time.outputs.run == 'true' && steps.cache-pw.outputs.cache-hit != 'true'
+        run: |
+          uv run playwright install
+          uv run playwright install-deps
+
+      - name: Fetch M3U8
+        if: steps.check_time.outputs.run == 'true'
+        run: uv run M3U8/fetch.py
+
+      - name: Push changes
+        if: steps.check_time.outputs.run == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v6
+        with:
+          commit_message: "update M3U8"
+          file_pattern: "M3U8/TV.m3u8"
+          commit_author: "GitHub Actions Bot <actions@github.com>"
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "actions@github.com"
