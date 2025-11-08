@@ -1,10 +1,9 @@
-## Base Log @ 2025-11-08 14:42 UTC
+## Base Log @ 2025-11-08 20:41 UTC
 
-### ✅ Working Streams: 143<br>❌ Dead Streams: 3
+### ✅ Working Streams: 144<br>❌ Dead Streams: 2
 
 | Channel | Error (Code) | Link |
 | ------- | ------------ | ---- |
-| Comedy Central | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/7466` |
 | FDSN Wisconsin | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/78599` |
 | NHL Network | HTTP Error (406) | `http://nocable.cc:8080/91161088/91161088/20179` |
 ---
