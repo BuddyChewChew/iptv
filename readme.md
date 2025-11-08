@@ -1,19 +1,12 @@
-## Base Log @ 2025-11-08 08:46 UTC
+## Base Log @ 2025-11-08 14:42 UTC
 
-### ✅ Working Streams: 136<br>❌ Dead Streams: 10
+### ✅ Working Streams: 143<br>❌ Dead Streams: 3
 
 | Channel | Error (Code) | Link |
 | ------- | ------------ | ---- |
-| ACC Network | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/9273` |
-| BBC America | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/20194` |
 | Comedy Central | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/7466` |
-| Disney XD | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/75621` |
-| ESPN U | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/10255` |
-| Fox Sports 2 | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/1847` |
-| Freeform TV | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/13370` |
-| HBO Comedy | HTTP Error (404) | `http://fl1.moveonjoy.com/HBO_COMEDY/index.m3u8` |
+| FDSN Wisconsin | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/78599` |
 | NHL Network | HTTP Error (406) | `http://nocable.cc:8080/91161088/91161088/20179` |
-| SportsNet New York | HTTP Error (403) | `http://nocable.cc:8080/91161088/91161088/20938` |
 ---
 #### Base Channels URL
 ```
